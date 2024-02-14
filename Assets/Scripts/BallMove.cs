@@ -7,7 +7,7 @@ public class BallMove : MonoBehaviour
     private GameObject currGameObj;
     private GameObject prevGameObj;
     private GameObject nextGameObj;
-    private float diffBtwnPlatforms = 0.5f;
+    private float diffBtwnPlatforms = 0.4f;
     private int index = 0;
     private int firstMember = 0;
     private int lastMember;
@@ -19,17 +19,19 @@ public class BallMove : MonoBehaviour
         currGameObj = objlist[index];   // 0
         nextGameObj = objlist[index+1]; // 1
         lastMember = objlist.Count-1;
+        this.transform.parent = currGameObj.transform;
+        transform.localPosition = Vector3.up;
     }
 
 
     private void Update()
     {
-        transform.position = new Vector3(currGameObj.transform.position.x, currGameObj.transform.position.y + 1f, currGameObj.transform.position.z);
+        //transform.position = new Vector3(currGameObj.transform.position.x, currGameObj.transform.position.y + 1f, currGameObj.transform.position.z); Old Way To Move Ball With Platform
         //currGameObj.GetComponent<Renderer>() = new Renderer
         //gameObject.renderer.material = renderer1;     Old Way Of Setting Renderer
         m_Material = currGameObj.GetComponent<Renderer>().material;
         gameObject.GetComponent<Renderer>().material = m_Material;
-
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -42,7 +44,10 @@ public class BallMove : MonoBehaviour
                     currGameObj = nextGameObj;
                     nextGameObj = objlist[index + 1];
                     Debug.Log("Moved To "+ currGameObj.name);
-                    Debug.Log(index);
+                    //Debug.Log(index);
+                    this.transform.parent = currGameObj.transform;
+                    transform.localPosition = Vector3.up;
+
                 }
             }
             else if (index > firstMember && index < lastMember)
@@ -58,7 +63,10 @@ public class BallMove : MonoBehaviour
                     }
                     
                     Debug.Log("Moved To " + currGameObj.name);
-                    Debug.Log(index);
+                    this.transform.parent = currGameObj.transform;
+                    transform.localPosition = Vector3.up;
+                    //Debug.Log(index);
+
                 }
                 else if (Mathf.Abs(prevGameObj.transform.position.y - currGameObj.transform.position.y) < diffBtwnPlatforms)
                 {
@@ -68,7 +76,10 @@ public class BallMove : MonoBehaviour
                     prevGameObj = objlist[index];
                     currGameObj = prevGameObj;
                     Debug.Log("Moved To " + currGameObj.name);
-                    Debug.Log(index);
+                    this.transform.parent = currGameObj.transform;
+                    transform.localPosition = Vector3.up;
+                    // Debug.Log(index);
+
                 }
             }
             else if (index == lastMember)
@@ -80,7 +91,10 @@ public class BallMove : MonoBehaviour
                     index--;
                     prevGameObj = objlist[index];
                     Debug.Log("Moved To " + currGameObj.name);
-                    Debug.Log(index);
+                    this.transform.parent = currGameObj.transform;
+                    transform.localPosition = Vector3.up;
+                    // Debug.Log(index);
+
                 }
             }
         }
