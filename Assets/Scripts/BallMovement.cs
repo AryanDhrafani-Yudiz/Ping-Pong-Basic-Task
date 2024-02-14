@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections.Generic;
 
 public class BallMovement : MonoBehaviour
 {
@@ -9,7 +9,8 @@ public class BallMovement : MonoBehaviour
     [SerializeField] private GameObject plat2;
     [SerializeField] private GameObject plat3;
     [SerializeField] private GameObject plat4;
-
+    private float diffBtwnPlatforms = 0.5f;
+    
     void Update()
     {
         if (Platform == 1)
@@ -28,9 +29,9 @@ public class BallMovement : MonoBehaviour
         {
             transform.position = new Vector3(plat4.transform.position.x, plat4.transform.position.y + 1f, plat4.transform.position.z);
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))    
         {
-            if (plat1.transform.position.y - plat2.transform.position.y < 0.08f && plat1.transform.position.y - plat2.transform.position.y > -0.08f)
+            if (Mathf.Abs(plat1.transform.position.y - plat2.transform.position.y ) < diffBtwnPlatforms)
             {
                 if (Platform == 1)
                 {
@@ -46,7 +47,7 @@ public class BallMovement : MonoBehaviour
                 }
 
             }
-            if (plat2.transform.position.y - plat3.transform.position.y < 0.08f && plat2.transform.position.y - plat3.transform.position.y > -0.08f)
+            if (Mathf.Abs(plat2.transform.position.y - plat3.transform.position.y) < diffBtwnPlatforms)
             {
                 if (Platform == 2)
                 {
@@ -62,7 +63,7 @@ public class BallMovement : MonoBehaviour
                 }
 
             }
-            if (plat3.transform.position.y - plat4.transform.position.y < 0.08f && plat3.transform.position.y - plat4.transform.position.y > -0.08f)
+            if (Mathf.Abs(plat3.transform.position.y - plat4.transform.position.y) < diffBtwnPlatforms)
             {
                 if (Platform == 3)
                 {
